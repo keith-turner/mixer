@@ -25,7 +25,7 @@ Commands :
 	exit|quit
 ```
 
-Inorder to run Mixer, a Fluo needs to be running.  The following command will start a single machine Fluo development instance.  After Fluo starts, a `fluo.properties` file containing connection information is created.  Wait for this file to exists before proceeding.
+Inorder to run Mixer, a Fluo instance needs to be running.  The following command will start a single machine Fluo development instance.  After Fluo starts, a `fluo.properties` file containing connection information is created.  Wait for this file to exists before proceeding.
 
 ```bash
 ./mixer.sh mini &> mini.log &
