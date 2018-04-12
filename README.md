@@ -109,7 +109,7 @@ $ ./mixer.sh shell fluo.properties
 ```
 
 There are two interesting things happening here.  First, the attributes are mapped from the Twitter and Facebook users for bob into the derived graph.  Second, when this happens all of bob's neighbors in the derived graph are updated with the attribute information.  The same is
-true for the folllwing counts, when these change for a node all of its neighbors are updated 
+true for the folllowing counts, when these change for a node all of its neighbors are updated 
 in the query table.  The derived graph is computed in Fluo and exported to an Accumulo table for query.  Every time an edge, alias, or attribute changes the derived graph is updated.
 
 Removing `fluo.properties` causes MiniFluo to stop.
