@@ -1,7 +1,7 @@
 # Mixer
 
-Simple prototype for creating a derived graph by merging nodes from different social networks using
-[Deriggy] and [Fluo].  Building this on Fluo has two benefits.  First, Fluo enables handling of large graphs that do not fit on a single machine.  Second, Fluo makes it possible to continuously recompute the derived graph as the source data changes. This prototype goes with the [talk](https://youtu.be/oqrjEexMLVE) given at the [Accumulo
+Prototype for creating a derived graph by merging nodes from different social networks using
+[Deriggy] and [Fluo].  Building this on Fluo has two benefits.  First, Fluo enables handling of very large graphs that do not fit on a single machine.  Second, Fluo makes it possible to continuously recompute the derived graph as the source data changes. This prototype goes with the [talk](https://youtu.be/oqrjEexMLVE) given at the [Accumulo
 Summit](http://accumulosummit.com/) in 2017. 
 
 ## Running Mixer
