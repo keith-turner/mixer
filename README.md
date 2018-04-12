@@ -1,10 +1,12 @@
 # Mixer
 
-Simple prototype for creating derived graphs from social network data using
-[Deriggy] and [Fluo].  This prototype goes with the
-[talk](https://youtu.be/oqrjEexMLVE) given at the [Accumulo
-Summit](http://accumulosummit.com/) in 2017.  This prototype has a shell that
-supports the following commands :
+Simple prototype for creating a derived graph by merging nodes from different social networks using
+[Deriggy] and [Fluo].  Building this on Fluo has two benefits.  First, Fluo enables handling of large graphs that do not fit on a single machine.  Second, Fluo makes it possible to continuously recompute the derived graph as the source data changes. This prototype goes with the [talk](https://youtu.be/oqrjEexMLVE) given at the [Accumulo
+Summit](http://accumulosummit.com/) in 2017. 
+
+## Running Mixer
+
+Mixer is best explained by examples. To get started, Mixer has a shell that supports the following commands :
 
 ```
 $ ./mixer.sh shell fluo.properties 
@@ -23,15 +25,13 @@ Commands :
 	exit|quit
 ```
 
-Changes to the derived graph are exported an Accumulo query table.  The lookup command accesses this query table, all other command interact with Fluo.
-
-The following commands starts a MiniAccumulo and MiniFluo instance, which are required to run this example.  This creates a `fluo.properties` file containing connection information.
+Inorder to run Mixer, a Fluo needs to be running.  The following command will start a single machine Fluo development instance.  After Fluo starts, a `fluo.properties` file containing connection information is created.  Wait for this file to exists before proceeding.
 
 ```bash
 ./mixer.sh mini &> mini.log &
 ```
 
-After starting MiniFluo, the following starts a shell and adds some edges to multiple social network graphs.  For example assume `tw` represents Twitter, then in the Twitter graph `bob1998` follows `bigjoe`.
+The following adds edges to multiple social network graphs.  For example assume `tw` represents Twitter, then in the Twitter graph `bob1998` follows `bigjoe`.
 
 ```bash
 $ ./mixer.sh shell fluo.properties <<EOF
@@ -47,7 +47,7 @@ exit
 EOF
 ```
 
-The following commands visualize the derived graph in the external query table.
+The following visualizes the derived graph in the external query table.
 
 
 ```bash
@@ -60,7 +60,7 @@ sudo apt install graphviz
 
 ![graph 1](images/sgraph1.png)
 
-The following maps users in social graphs into the derived graph.  For example the Twitter user `bob1998` and the Facebook user `bob98` are  mapped to `bob` in the derived graph. 
+The following maps users in different social graphs into the derived graph.  For example the Twitter user `bob1998` and the Facebook user `bob98` are  mapped to `bob` in the derived graph. 
 
 ```bash
 $ ./mixer.sh shell fluo.properties <<EOF
@@ -80,7 +80,7 @@ exit
 EOF
 ```
 
-After aliasing the users, the derived graph looks much different.
+After mapping the users, the derived graph looks much different.
 
 ```bash
 ./mixer.sh graphviz fluo.properties | neato -Tpng > sgraph2.png; xdg-open sgraph2.png
@@ -110,7 +110,7 @@ $ ./mixer.sh shell fluo.properties
 
 There are two interesting things happening here.  First, the attributes are mapped from the Twitter and Facebook users for bob into the derived graph.  Second, when this happens all of bob's neighbors in the derived graph are updated with the attribute information.  The same is
 true for the folllwing counts, when these change for a node all of its neighbors are updated 
-in the query table.
+in the query table.  The derived graph is computed in Fluo and exported to an Accumulo table for query.  Every time an edge, alias, or attribute changes the derived graph is updated.
 
 Removing `fluo.properties` causes MiniFluo to stop.
 
